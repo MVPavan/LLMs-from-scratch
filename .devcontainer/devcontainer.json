@@ -1,0 +1,29 @@
+{
+    "name": "LLM-PT25",
+    "dockerComposeFile": "compose.pytorch25.yml",
+    "service": "llm_pt25_service",
+    "workspaceFolder": "/media/data_2/opensource/LLMs-from-scratch",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash"
+            },
+            "extensions": [
+				"sugatoray.vscode-git-extension-pack",
+				"franneck94.vscode-python-dev-extension-pack",
+				"franneck94.vscode-coding-tools-extension-pack",
+				"gruntfuggly.todo-tree",
+				"streetsidesoftware.code-spell-checker",
+				"oderwat.indent-rainbow",
+				"mechatroner.rainbow-csv",
+				"moshfeu.compare-folders",
+				"mikestead.dotenv",
+                "ms-toolsai.jupyter",
+                "yahyabatulu.vscode-markdown-alert",
+                "tomoki1207.pdf"
+			]
+        }
+    },
+	"remoteUser": "root",
+    "shutdownAction": "none"
+}
