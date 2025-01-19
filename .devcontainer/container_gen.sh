@@ -36,6 +36,9 @@ services:
     stdin_open: true 
     tty: true
 
+    # Uncomment if below doesnt work
+    # runtime: nvidia
+    # default choice
     deploy:
       resources:
         reservations:
