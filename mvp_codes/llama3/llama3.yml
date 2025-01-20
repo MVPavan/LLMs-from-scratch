@@ -1,0 +1,8 @@
+model:
+  vocab_size: 128256
+  cntx_len: 131072
+  embed_dim: 2048
+  num_heads: 32
+  num_layers: 16
+  ffn_dim: 8192
+
