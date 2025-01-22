@@ -2,7 +2,7 @@ from pathlib import Path
 import tiktoken
 from tiktoken.load import load_tiktoken_bpe
 
-from mvp_codes.llama3.llama3_config import Llama32Params
+from mvp_codes.llms.llm_config_helper import Llama32Params
 
 class Llama32Tokenizer:
     def __init__(self, tokenizer_model_path:str):
@@ -100,5 +100,4 @@ class Llama32ChatFormat:
 
     def decode_chats(self, chats):
         return [self.decode_chat(chat) for chat in chats]
-
 

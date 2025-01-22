@@ -1,7 +1,6 @@
 from pathlib import Path
 from pydantic import BaseModel
 from omegaconf import OmegaConf
-llama3_config = OmegaConf.load('mvp_codes/llama3/llama3.yml')
 
 '''
 BD --> Batch size
@@ -21,9 +20,12 @@ class Llama32Params(BaseModel):
     num_layers: int = 16
     ffn_dim: int = 8192
     dropout: float = 0.1
+    theta_base: int = 10000
 
     def __init__(self):
         if self.embed_dim % self.num_heads != 0:
             raise ValueError("Embedding dimension must be divisible by number of heads.")
         self.att_dim_in = self.embed_dim
         self.att_dim_out = self.embed_dim//self.num_heads
+
+# llama3_config = OmegaConf.load('mvp_codes/llama3/llama3.yml')
