@@ -33,4 +33,4 @@ COPY requirements.txt /tmp/requirements.txt
 
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-WORKDIR /media/data_2/opensource/LLMs-from-scratch
+# WORKDIR ~/

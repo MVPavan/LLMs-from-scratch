@@ -2,18 +2,18 @@ from pathlib import Path
 import tiktoken
 from tiktoken.load import load_tiktoken_bpe
 
-from llama3_config import Llama32Params
+from mvp_codes.llama3.llama3_config import Llama32Params
 
 class Llama32Tokenizer:
-    def __init__(self, tokenizer_model_path:str, params: Llama32Params):
-        self.params = params
+    def __init__(self, tokenizer_model_path:str):
+        # self.params = params
         assert Path(tokenizer_model_path).exists()
         meargeable_ranks = load_tiktoken_bpe(tokenizer_model_path)
         pat_str=r"(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\r\n\p{L}\p{N}]?\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+"
 
         self.special_tokens = {
-            "<|begin_of_text|>": 128000,
-            "<|end_of_text|>": 128001,
+            "<|beginoftext|>": 128000,
+            "<|endoftext|>": 128001,
             "<|start_header_id|>": 128006,
             "<|end_header_id|>": 128007,
             "<|eot_id|>": 128009,
@@ -100,4 +100,5 @@ class Llama32ChatFormat:
 
     def decode_chats(self, chats):
         return [self.decode_chat(chat) for chat in chats]
+
 
