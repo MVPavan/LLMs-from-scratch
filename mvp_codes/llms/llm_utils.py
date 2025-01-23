@@ -1,8 +1,55 @@
 from pathlib import Path
 import tiktoken
 from tiktoken.load import load_tiktoken_bpe
+import torch
 
-from mvp_codes.llms.llm_config_helper import Llama32Params
+from mvp_codes.llms.llm_config_helper import LLMParams
+from prettytable import PrettyTable
+
+def model_memory_size(model, input_dtype=torch.float32):
+    total_params = 0
+    total_grads = 0
+    for param in model.parameters():
+        param_size = param.numel()
+        total_params += param_size
+        if param.requires_grad:
+            total_grads += param_size
+
+    total_buffers = sum(buf.numel() for buf in model.buffers())
+    # Size in bytes = (Number of elements) * (Size of each element in bytes)
+    # We assume parameters and gradients are stored in the same type as input dtype
+    element_size = torch.tensor(0, dtype=input_dtype).element_size()
+    total_memory_bytes = (total_params + total_grads + total_buffers) * element_size
+    total_memory_gb = total_memory_bytes / (1024**3)
+    return total_memory_gb
+
+def model_stats(model):
+    '''
+    Estimate the model stats
+    '''
+    order = 1e6
+    total_buff = sum(buf.numel() for buf in model.buffers())
+    total_param = sum(p.numel() for p in model.parameters())
+    total_unique_params = total_param - model.tok_emb.weight.numel()
+    total_trainable_param = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    fp32_memory = model_memory_size(model, input_dtype=torch.float32)
+    bf16_memory = model_memory_size(model, input_dtype=torch.bfloat16)
+    stats = {
+        "total_buff": round(total_buff/order,2),
+        "total_param": round(total_param/order, 2),
+        "total_unique_params": round(total_unique_params/order, 2),
+        "total_trainable_param": round(total_trainable_param/order, 2),
+        "fp32_memory": round(fp32_memory,2),
+        "bf16_memory": round(bf16_memory,2),
+    }
+    table = PrettyTable()
+    table.field_names = ["Metric in Mil/GB", "Value"]
+    for key, value in stats.items():
+        table.add_row([key, value])
+    
+    print(table)
+    # print("Prams in million and memory in GB\n",stats)
+    return stats
 
 class Llama32Tokenizer:
     def __init__(self, tokenizer_model_path:str):
@@ -49,7 +96,7 @@ class Llama32ChatFormat:
         text<|eot_id|>
     }
     '''
-    def __init__(self, tokenizer: Llama32Tokenizer, params: Llama32Params):
+    def __init__(self, tokenizer: Llama32Tokenizer, params: LLMParams):
         self.tokenizer = tokenizer
         self.params = params
 

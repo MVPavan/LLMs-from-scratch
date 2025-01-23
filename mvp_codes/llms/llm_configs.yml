@@ -1,8 +1,18 @@
 model:
   vocab_size: 128256
-  cntx_len: 131072
+  context_length: 131072
   embed_dim: 2048
   num_heads: 32
   num_layers: 16
   ffn_dim: 8192
 
+llama32:
+  vocab_size: 128256
+  context_length: 8192
+  embed_dim: 2048
+  num_heads: 32
+  num_kv_groups: 8
+  num_layers: 16
+  ffn_dim: 8192
+  dropout: 0
+  rope_base: 0 # if 0 it be auto computed based on cntx len

@@ -32,16 +32,16 @@ class LlamaDLPreTokenized(Dataset):
         return input_ids, target_ids
 
 
-train_dataset = LlamaDLPreTokenized(
-    "/media/data_2/datasets/large_models_data/gutenberg_data/train_tokenized.parquet",
-    max_len=512,
-    stride=256
-)
-val_dataset = LlamaDLPreTokenized(
-    "/media/data_2/datasets/large_models_data/gutenberg_data/val_tokenized.parquet",
-    max_len=512,
-    stride=256
-)
+# train_dataset = LlamaDLPreTokenized(
+#     "/media/data_2/datasets/large_models_data/gutenberg_data/train_tokenized.parquet",
+#     max_len=512,
+#     stride=256
+# )
+# val_dataset = LlamaDLPreTokenized(
+#     "/media/data_2/datasets/large_models_data/gutenberg_data/val_tokenized.parquet",
+#     max_len=512,
+#     stride=256
+# )
 # test_dataset = LlamaDLPreTokenized(
 #     "/media/data_2/datasets/large_models_data/gutenberg_data/test_tokenized.parquet",
 #     max_len=512,
